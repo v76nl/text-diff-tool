@@ -1,0 +1,56 @@
+body {
+    font-family: "Zen Maru Gothic", sans-serif;
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+#modifiedText,
+span {
+    font-family: "Zen Maru Gothic", sans-serif;
+}
+
+.textarea-container {
+    position: relative;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 200px;
+}
+
+/* スクロールバーのスタイル調整 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 差分ハイライト用のスタイル */
+.diff-added {
+    background-color: #bbf7d0; /* green-200 */
+    color: #14532d; /* green-900 */
+    text-decoration: none;
+    padding: 0 0.125rem;
+}
+
+.diff-removed {
+    background-color: #fecaca; /* red-200 */
+    color: #7f1d1d; /* red-900 */
+    text-decoration: line-through;
+    padding: 0 0.125rem;
+}
+
+.diff-normal {
+    color: #374151; /* gray-700 */
+}
