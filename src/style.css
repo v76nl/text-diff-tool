@@ -400,10 +400,12 @@ body {
   overflow-wrap: break-word;
 }
 
+.custom-textarea::placeholder,
 .diff-output .diff-placeholder {
   color: var(--text-light);
   font-family: "Zen Maru Gothic", sans-serif;
   font-style: normal;
+  opacity: 1; /* Browser default override */
 }
 
 /* Scrollbars */
