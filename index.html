@@ -6,7 +6,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0"
         />
-        <title>テキスト比較ツール (Text Diff Tool)</title>
+        <title>Text Diff Tool</title>
 
         <link
             rel="preconnect"
@@ -27,20 +27,30 @@
             <!-- ヘッダー -->
             <header class="app-header">
                 <div class="header-info">
-                    <h1 class="header-title">
-                        テキスト比較ツール
-                    </h1>
+                    <h1 class="header-title">テキスト比較ツール</h1>
                     <p class="header-subtitle">
-                        2つのテキストを入力すると、リアルタイムで差分(追加・削除)を表示します。
+                        2つのテキストを入力すると、リアルタイムで差分を表示します。
                     </p>
                 </div>
 
                 <!-- 比較モード選択 -->
                 <div class="mode-selector">
-                    <label for="diffMode" class="mode-label">比較モード:</label>
-                    <select id="diffMode" class="select-input">
+                    <label
+                        for="diffMode"
+                        class="mode-label"
+                        >比較モード:</label
+                    >
+                    <select
+                        id="diffMode"
+                        class="select-input"
+                    >
                         <option value="chars">文字ごと</option>
-                        <option value="words" selected>単語ごと</option>
+                        <option
+                            value="words"
+                            selected
+                        >
+                            単語ごと
+                        </option>
                         <option value="lines">行ごと</option>
                     </select>
                 </div>
@@ -52,7 +62,10 @@
                 <div class="card textarea-card">
                     <div class="card-header">
                         <h2 class="card-title">変更前</h2>
-                        <button id="clearOriginalBtn" class="clear-btn">
+                        <button
+                            id="clearOriginalBtn"
+                            class="clear-btn"
+                        >
                             クリア
                         </button>
                     </div>
@@ -91,7 +104,10 @@
                 <div class="card textarea-card">
                     <div class="card-header">
                         <h2 class="card-title">変更後</h2>
-                        <button id="clearModifiedBtn" class="clear-btn">
+                        <button
+                            id="clearModifiedBtn"
+                            class="clear-btn"
+                        >
                             クリア
                         </button>
                     </div>
@@ -106,7 +122,10 @@
 
                 <!-- モバイル用入れ替えボタン -->
                 <div class="mobile-only swap-btn-mobile-wrapper">
-                    <button id="swapBtnMobile" class="swap-btn-mobile">
+                    <button
+                        id="swapBtnMobile"
+                        class="swap-btn-mobile"
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="icon"
@@ -143,17 +162,26 @@
                     </div>
                 </div>
 
-                <div id="diffOutput" class="diff-output">
+                <div
+                    id="diffOutput"
+                    class="diff-output"
+                >
                     ここに比較結果が表示されます
                 </div>
             </div>
 
             <!-- コピー機能付きフッター -->
             <div class="actions-footer">
-                <button id="sampleBtn" class="btn btn-secondary">
+                <button
+                    id="sampleBtn"
+                    class="btn btn-secondary"
+                >
                     サンプルを入力
                 </button>
-                <button id="copyBtn" class="btn btn-primary">
+                <button
+                    id="copyBtn"
+                    class="btn btn-primary"
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon"
@@ -174,10 +202,16 @@
         </div>
 
         <!-- メッセージボックス(トースト) -->
-        <div id="toast" class="toast">
+        <div
+            id="toast"
+            class="toast"
+        >
             コピーしました！
         </div>
 
-        <script type="module" src="/src/main.ts"></script>
+        <script
+            type="module"
+            src="/src/main.ts"
+        ></script>
     </body>
 </html>

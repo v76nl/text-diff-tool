@@ -195,6 +195,7 @@ body {
   transition: var(--transition-normal);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
+  white-space: nowrap;
 }
 
 .clear-btn:hover {
@@ -222,6 +223,8 @@ body {
   font-family: inherit;
   font-size: 0.95rem;
   transition: var(--transition-normal);
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .custom-textarea:focus {
@@ -289,6 +292,7 @@ body {
   gap: 0.5rem;
   cursor: pointer;
   transition: var(--transition-normal);
+  white-space: nowrap;
 }
 
 .swap-btn-mobile:hover {
@@ -352,6 +356,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 
 .legend-color {
@@ -375,9 +380,13 @@ body {
   color: var(--text-muted);
 }
 
+.diff-output,
+.diff-output span {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 .diff-output {
   white-space: pre-wrap;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.95rem;
   line-height: 1.75;
   background-color: var(--bg-input);
@@ -387,6 +396,8 @@ body {
   min-height: 220px;
   overflow-x: auto;
   color: var(--text-main);
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .diff-placeholder {
@@ -433,6 +444,7 @@ body {
   gap: 0.5rem;
   border: 1px solid transparent;
   transition: var(--transition-normal);
+  white-space: nowrap;
 }
 
 .btn-secondary {
