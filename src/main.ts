@@ -31,13 +31,25 @@ function updateDiff(): void {
         return;
     }
 
-    let diffResults: Diff.Change[] = [];
+    let diffResults: { value: string; added?: boolean; removed?: boolean }[] = [];
 
     // jsdiffライブラリを使用して差分を計算
     if (mode === 'chars') {
         diffResults = Diff.diffChars(text1, text2);
     } else if (mode === 'words') {
-        diffResults = Diff.diffWords(text1, text2);
+        if (typeof Intl !== 'undefined' && 'Segmenter' in Intl) {
+            const segmenter = new (Intl as any).Segmenter(undefined, { granularity: 'word' });
+            const tokenize = (text: string) => Array.from(segmenter.segment(text), (s: any) => s.segment as string);
+            const tokens1 = tokenize(text1);
+            const tokens2 = tokenize(text2);
+            diffResults = Diff.diffArrays(tokens1, tokens2).map(part => ({
+                value: part.value.join(''),
+                added: part.added,
+                removed: part.removed
+            }));
+        } else {
+            diffResults = Diff.diffWords(text1, text2);
+        }
     } else if (mode === 'lines') {
         diffResults = Diff.diffLines(text1, text2);
     }
