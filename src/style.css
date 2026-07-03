@@ -271,7 +271,7 @@ body {
   }
 }
 
-.swap-btn-mobile-wrapper {
+.mobile-only.swap-btn-mobile-wrapper {
   display: flex;
   justify-content: center;
   margin: 0.25rem 0;
@@ -306,6 +306,9 @@ body {
 
 @media (min-width: 768px) {
   .mobile-only {
+    display: none;
+  }
+  .mobile-only.swap-btn-mobile-wrapper {
     display: none;
   }
 }
