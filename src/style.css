@@ -402,7 +402,8 @@ body {
 
 .diff-placeholder {
   color: var(--text-light);
-  font-style: italic;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-style: normal;
 }
 
 /* Scrollbars */
