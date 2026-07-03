@@ -400,7 +400,7 @@ body {
   overflow-wrap: break-word;
 }
 
-.diff-placeholder {
+.diff-output .diff-placeholder {
   color: var(--text-light);
   font-family: "Zen Maru Gothic", sans-serif;
   font-style: normal;
