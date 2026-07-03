@@ -21,84 +21,59 @@
             href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap"
             rel="stylesheet"
         />
-
-        <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="min-h-screen p-4 md:p-8 flex flex-col items-center">
-        <div class="w-full max-w-6xl flex flex-col gap-6">
+    <body>
+        <div class="app-container">
             <!-- ヘッダー -->
-            <header
-                class="flex flex-col md:flex-row items-center justify-between bg-white p-6 shadow-sm border border-gray-100"
-            >
-                <div>
-                    <h1
-                        class="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2"
-                    >
+            <header class="app-header">
+                <div class="header-info">
+                    <h1 class="header-title">
                         テキスト比較ツール
                     </h1>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="header-subtitle">
                         2つのテキストを入力すると、リアルタイムで差分(追加・削除)を表示します。
                     </p>
                 </div>
 
                 <!-- 比較モード選択 -->
-                <div class="mt-4 md:mt-0 flex items-center gap-3">
-                    <label
-                        for="diffMode"
-                        class="text-sm font-medium text-gray-700"
-                        >比較モード:</label
-                    >
-                    <select
-                        id="diffMode"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 outline-none transition-colors"
-                    >
+                <div class="mode-selector">
+                    <label for="diffMode" class="mode-label">比較モード:</label>
+                    <select id="diffMode" class="select-input">
                         <option value="chars">文字ごと</option>
-                        <option
-                            value="words"
-                            selected
-                        >
-                            単語ごと
-                        </option>
+                        <option value="words" selected>単語ごと</option>
                         <option value="lines">行ごと</option>
                     </select>
                 </div>
             </header>
 
             <!-- 入力エリア -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+            <div class="input-grid">
                 <!-- 変更前テキスト -->
-                <div
-                    class="bg-white shadow-sm border border-gray-100 p-4 flex flex-col gap-2"
-                >
-                    <div class="flex justify-between items-center mb-1">
-                        <h2 class="text-lg font-semibold text-gray-700">
-                            変更前
-                        </h2>
-                        <button
-                            id="clearOriginalBtn"
-                            class="text-xs text-gray-400 hover:text-red-500 transition-colors"
-                        >
+                <div class="card textarea-card">
+                    <div class="card-header">
+                        <h2 class="card-title">変更前</h2>
+                        <button id="clearOriginalBtn" class="clear-btn">
                             クリア
                         </button>
                     </div>
-                    <div class="textarea-container flex-grow">
+                    <div class="textarea-container">
                         <textarea
                             id="originalText"
-                            class="w-full h-full p-4 border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all"
+                            class="custom-textarea"
                             placeholder="ここに元のテキストを入力してください"
                         ></textarea>
                     </div>
                 </div>
 
-                <!-- 入れ替えボタン (デスクトップでは中央、モバイルでは間) -->
+                <!-- 入れ替えボタン (デスクトップ用) -->
                 <button
                     id="swapBtn"
-                    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-3 shadow-md border border-gray-200 hover:bg-gray-50 hover:scale-105 transition-all text-blue-600 z-10 hidden md:block"
+                    class="swap-btn desktop-only"
                     title="テキストを入れ替える"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
+                        class="icon"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -113,38 +88,28 @@
                 </button>
 
                 <!-- 変更後テキスト -->
-                <div
-                    class="bg-white shadow-sm border border-gray-100 p-4 flex flex-col gap-2"
-                >
-                    <div class="flex justify-between items-center mb-1">
-                        <h2 class="text-lg font-semibold text-gray-700">
-                            変更後
-                        </h2>
-                        <button
-                            id="clearModifiedBtn"
-                            class="text-xs text-gray-400 hover:text-red-500 transition-colors"
-                        >
+                <div class="card textarea-card">
+                    <div class="card-header">
+                        <h2 class="card-title">変更後</h2>
+                        <button id="clearModifiedBtn" class="clear-btn">
                             クリア
                         </button>
                     </div>
-                    <div class="textarea-container flex-grow">
+                    <div class="textarea-container">
                         <textarea
                             id="modifiedText"
-                            class="w-full h-full p-4 border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all"
+                            class="custom-textarea"
                             placeholder="ここに変更後のテキストを入力してください"
                         ></textarea>
                     </div>
                 </div>
 
                 <!-- モバイル用入れ替えボタン -->
-                <div class="flex justify-center md:hidden my-2">
-                    <button
-                        id="swapBtnMobile"
-                        class="bg-white p-3 shadow-md border border-gray-200 hover:bg-gray-50 transition-all text-blue-600 flex items-center gap-2"
-                    >
+                <div class="mobile-only swap-btn-mobile-wrapper">
+                    <button id="swapBtnMobile" class="swap-btn-mobile">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5"
+                            class="icon"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -162,51 +127,36 @@
             </div>
 
             <!-- 比較結果表示エリア -->
-            <div class="bg-white shadow-sm border border-gray-100 p-6">
-                <div
-                    class="flex justify-between items-center mb-4 pb-4 border-b border-gray-100"
-                >
-                    <h2 class="text-xl font-bold text-gray-800">比較結果</h2>
+            <div class="card results-card">
+                <div class="results-header">
+                    <h2 class="results-title">比較結果</h2>
 
-                    <div class="flex items-center gap-4 text-sm font-medium">
-                        <div class="flex items-center gap-1.5">
-                            <span
-                                class="w-4 h-4 bg-red-200 inline-block"
-                            ></span>
-                            <span class="text-gray-600">削除されている</span>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <span class="legend-color color-removed"></span>
+                            <span class="legend-label">削除されている</span>
                         </div>
-                        <div class="flex items-center gap-1.5">
-                            <span
-                                class="w-4 h-4 bg-green-200 inline-block"
-                            ></span>
-                            <span class="text-gray-600">追加されている</span>
+                        <div class="legend-item">
+                            <span class="legend-color color-added"></span>
+                            <span class="legend-label">追加されている</span>
                         </div>
                     </div>
                 </div>
 
-                <div
-                    id="diffOutput"
-                    class="whitespace-pre-wrap font-mono text-base leading-relaxed bg-gray-50 p-6 border border-gray-200 min-h-[200px] overflow-x-auto text-gray-700"
-                >
+                <div id="diffOutput" class="diff-output">
                     ここに比較結果が表示されます
                 </div>
             </div>
 
             <!-- コピー機能付きフッター -->
-            <div class="flex justify-end gap-3 mt-2">
-                <button
-                    id="sampleBtn"
-                    class="px-5 py-2.5 bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-colors border border-gray-200"
-                >
+            <div class="actions-footer">
+                <button id="sampleBtn" class="btn btn-secondary">
                     サンプルを入力
                 </button>
-                <button
-                    id="copyBtn"
-                    class="px-5 py-2.5 bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors shadow-sm flex items-center gap-2"
-                >
+                <button id="copyBtn" class="btn btn-primary">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
+                        class="icon"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -224,16 +174,10 @@
         </div>
 
         <!-- メッセージボックス(トースト) -->
-        <div
-            id="toast"
-            class="fixed bottom-5 right-5 bg-gray-800 text-white px-6 py-3 shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50"
-        >
+        <div id="toast" class="toast">
             コピーしました！
         </div>
 
-        <script
-            type="module"
-            src="/src/main.ts"
-        ></script>
+        <script type="module" src="/src/main.ts"></script>
     </body>
 </html>

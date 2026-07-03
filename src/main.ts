@@ -27,7 +27,7 @@ function updateDiff(): void {
 
     // 両方が空の場合はリセット
     if (!text1 && !text2) {
-        diffOutput.innerHTML = '<span class="text-gray-400">ここに比較結果が表示されます</span>';
+        diffOutput.innerHTML = '<span class="diff-placeholder">ここに比較結果が表示されます</span>';
         return;
     }
 
@@ -121,11 +121,11 @@ if (sampleBtn && originalText && modifiedText) {
 function showToast(message: string): void {
     if (toast) {
         toast.textContent = message;
-        toast.classList.remove('translate-y-20', 'opacity-0');
+        toast.classList.add('show');
 
         // 3秒後に非表示
         setTimeout(() => {
-            toast.classList.add('translate-y-20', 'opacity-0');
+            toast.classList.remove('show');
         }, 3000);
     }
 }

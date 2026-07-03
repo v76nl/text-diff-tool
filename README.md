@@ -2,6 +2,7 @@
 
 2つのテキストを入力し差分を表示するWebアプリ。
 文字ごと、単語ごと、行ごとの差分表示が可能。
+試す: https://v76nl.github.io/text-diff-tool/
 
 ## setup
 
