@@ -14,6 +14,25 @@ const clearModifiedBtn = document.getElementById('clearModifiedBtn') as HTMLButt
 const sampleBtn = document.getElementById('sampleBtn') as HTMLButtonElement;
 const copyBtn = document.getElementById('copyBtn') as HTMLButtonElement;
 const toast = document.getElementById('toast') as HTMLDivElement;
+// 最新の差分結果を保持する変数（コピー機能で使用）
+let lastDiffResults: { value: string; added?: boolean; removed?: boolean }[] = [];
+
+// マークダウン用に差分テキストを整形（追加部分を**、削除部分を~~で囲む。改行や空白は考慮する）
+function formatMarkdownPart(value: string, tag: string): string {
+    return value.split('\n').map(line => {
+        if (!line) {
+            return line;
+        }
+        const match = line.match(/^(\s*)(.*?)(\s*)$/);
+        if (match) {
+            const [, leading, content, trailing] = match;
+            if (content) {
+                return `${leading}${tag}${content}${tag}${trailing}`;
+            }
+        }
+        return line;
+    }).join('\n');
+}
 
 // 比較処理メイン関数
 function updateDiff(): void {
@@ -28,6 +47,7 @@ function updateDiff(): void {
     // 両方が空の場合はリセット
     if (!text1 && !text2) {
         diffOutput.innerHTML = '<span class="diff-placeholder">ここに比較結果が表示されます</span>';
+        lastDiffResults = [];
         return;
     }
 
@@ -53,6 +73,8 @@ function updateDiff(): void {
     } else if (mode === 'lines') {
         diffResults = Diff.diffLines(text1, text2);
     }
+
+    lastDiffResults = diffResults;
 
     // DocumentFragmentを使ってパフォーマンス向上
     const fragment = document.createDocumentFragment();
@@ -145,17 +167,39 @@ function showToast(message: string): void {
 // クリップボードへのコピー機能
 if (copyBtn && diffOutput) {
     copyBtn.addEventListener('click', () => {
-        // テキストのみを抽出(<ins><del>などのタグを除外した、純粋な表示テキストをコピーしたい場合はinnerTextを使用)
-        // 単純に結果テキストをコピーするよりは、変更後のテキストをベースにコピーするか、そのままプレーンテキスト化してコピーする
-        const textToCopy = diffOutput.innerText;
+        if (lastDiffResults.length === 0) {
+            return;
+        }
 
-        if (!textToCopy || textToCopy === 'ここに比較結果が表示されます') {
+        let markdownText = '';
+        const noSpaceBeforeRegex = /[\s.,;:!?。、！？（｛［「『]$/;
+        const noSpaceAfterRegex = /^[\s.,;:!?。、！？）｝］）」』]/;
+
+        lastDiffResults.forEach((part, index) => {
+            if (part.added || part.removed) {
+                const tag = part.added ? '**' : '~~';
+                const formattedContent = formatMarkdownPart(part.value, tag);
+
+                // 前にスペース、改行、または特定の開始記号（括弧など）がない場合はスペースを入れる
+                const needsSpaceBefore = markdownText.length > 0 && !noSpaceBeforeRegex.test(markdownText);
+                
+                // 次にスペース、改行、または特定の終了記号・句読点がない場合はスペースを入れる
+                const nextPart = index < lastDiffResults.length - 1 ? lastDiffResults[index + 1] : null;
+                const needsSpaceAfter = nextPart && !noSpaceAfterRegex.test(nextPart.value);
+
+                markdownText += (needsSpaceBefore ? ' ' : '') + formattedContent + (needsSpaceAfter ? ' ' : '');
+            } else {
+                markdownText += part.value;
+            }
+        });
+
+        if (!markdownText) {
             return;
         }
 
         // テキストをクリップボードにコピー
         const textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
+        textArea.value = markdownText;
         document.body.appendChild(textArea);
         textArea.select();
 
