@@ -145,8 +145,8 @@ if (clearModifiedBtn && modifiedText) {
 // サンプルテキスト入力機能
 if (sampleBtn && originalText && modifiedText) {
     sampleBtn.addEventListener('click', () => {
-        originalText.value = "吾輩は猫である。名前はまだ無い。\nどこで生れたかとんと見当がつかぬ。\n何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。";
-        modifiedText.value = "吾輩は犬である。名前はポチという。\nどこで生れたかとんと見当がつかぬ。\n何でも明るいぽかぽかした所でワンワン吠えていた事だけは記憶している。";
+        originalText.value = "吾輩は猫である。名前はまだ無い。\nどこで生れたかとんと見当がつかぬ。\n何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。\n\nThe quick brown fox jumps over the lazy dog.";
+        modifiedText.value = "吾輩は犬である。名前はポチという。\nどこで生れたかとんと見当がつかぬ。\n何でも明るいぽかぽかした所でワンワン吠えていた事だけは記憶している。\n\nThe fast brown fox jumps over a lazy dog.";
         updateDiff();
     });
 }
