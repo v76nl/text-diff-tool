@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: '/text-diff-tool/',
   root: './',
   build: {
     outDir: 'dist',
